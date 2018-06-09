@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#2067FF</item>
+        <item name="colorPrimaryDark">#003982</item>
+        <item name="colorAccent">#FFB100</item>
+
+        <!-- Set the transitions which are used for the entrance and exit of shared elements -->
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/detail_transition
+        </item>
+        <item name="android:windowSharedElementExitTransition">
+            @transition/detail_transition
+        </item>
+    </style>
+</resources>
