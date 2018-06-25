@@ -18,17 +18,17 @@ We create a more useful user friendly UI such as:
 ![XYZ Reader Midway][image2]
 
 ## Project rubric
-- [x] App uses the Design Support library and its provided widget types (FloatingActionButton, AppBarLayout, SnackBar, etc).
-
-- [ ] App uses CoordinatorLayout for the main Activity.
-
-- [x] App theme extends from AppCompat.
+| | Required Behavior |
+| --- | --- |
+| - [x] | App uses the Design Support library and its provided widget types (FloatingActionButton, AppBarLayout, SnackBar, etc). |
+| - [ ] | App uses CoordinatorLayout for the main Activity. |
+| - [x] | App theme extends from AppCompat. |
 
 - [x] App uses an AppBar and associated Toolbars.
 
 - [x] App provides a Floating Action Button for the most common action(s).
 
-- [ ] App properly specifies elevations for app bars, FABs, and other elements specified in the Material Design specification.
+- [ ] App properly specifies elevations for app bars, FABs, and other elements specified in the [Material Design specification](https://material.io/design/introduction/).
 
 - [ ] App has a consistent color theme defined in styles.xml. Color theme does not impact usability of the app.
 
@@ -38,6 +38,6 @@ We create a more useful user friendly UI such as:
 
 - [ ] App uses fonts that are either the Android defaults, are complementary, and aren't otherwise distracting.
 
-- [x] App conforms to common standards found in the Android Nanodegree General Project Guidelines.
+- [x] App conforms to common standards found in the [Android Nanodegree General Project Guidelines](http://udacity.github.io/android-nanodegree-guidelines/core.html).
 
 - [x] App utilizes stable release versions of all libraries, Gradle, and Android Studio.
