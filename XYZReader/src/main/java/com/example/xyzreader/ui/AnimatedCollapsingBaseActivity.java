@@ -19,7 +19,7 @@ import com.example.xyzreader.R;
  * Adapted from: http://www.devexchanges.info/2016/03/android-tip-custom-coordinatorlayout.html
  */
 
-public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
+public class AnimatedCollapsingBaseActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
 
     private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.9f;
     private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS     = 0.3f;
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Fresco.initialize(this);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
         findViews();
 
         toolbar.setTitle("");
