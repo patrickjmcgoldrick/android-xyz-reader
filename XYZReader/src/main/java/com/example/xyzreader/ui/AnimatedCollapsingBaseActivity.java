@@ -68,14 +68,7 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
         startAlphaAnimation(textviewTitle, 0, View.INVISIBLE);
 
         //set avatar and cover
-        avatar.setImageResource(R.mipmap.ic_launcher);//setImageURI(imageUri);
-        //TODO: where does this go?  coverImage.setImageResource(R.drawable.cover);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        avatar.setImageResource(R.mipmap.ic_launcher);
     }
 
     @Override

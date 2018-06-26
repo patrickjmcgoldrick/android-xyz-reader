@@ -29,12 +29,16 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
+import android.transition.Slide;
 import android.transition.Transition;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,6 +46,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
+
+import okhttp3.internal.Util;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -163,7 +169,7 @@ public class ArticleDetailFragment extends ActionBarActivity
     }
 
     private void bindViews() {
-
+        //animateScreenElements();
 //        TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
         final TextView bylineView = (TextView) findViewById(R.id.article_byline);
         //bylineView.setMovementMethod(new LinkMovementMethod());
@@ -177,21 +183,21 @@ public class ArticleDetailFragment extends ActionBarActivity
             //titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
             Date publishedDate = parsePublishedDate();
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
-//                bylineView.setText(Html.fromHtml(
-//                        DateUtils.getRelativeTimeSpanString(
-//                                publishedDate.getTime(),
-//                                System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-//                                DateUtils.FORMAT_ABBREV_ALL).toString()
-//                                + " by <font color='#ffffff'>"
-//                                + mCursor.getString(ArticleLoader.Query.AUTHOR)
-//                                + "</font>"));
+                bylineView.setText(Html.fromHtml(
+                        DateUtils.getRelativeTimeSpanString(
+                                publishedDate.getTime(),
+                                System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
+                                DateUtils.FORMAT_ABBREV_ALL).toString()
+                                + " by <font color='#ffffff'>"
+                                + mCursor.getString(ArticleLoader.Query.AUTHOR)
+                                + "</font>"));
 
             } else {
                 // If date is before 1902, just show the string
-//                bylineView.setText(Html.fromHtml(
-//                        outputFormat.format(publishedDate) + " by <font color='#ffffff'>"
-//                        + mCursor.getString(ArticleLoader.Query.AUTHOR)
-//                                + "</font>"));
+                bylineView.setText(Html.fromHtml(
+                        outputFormat.format(publishedDate) + " by <font color='#ffffff'>"
+                        + mCursor.getString(ArticleLoader.Query.AUTHOR)
+                                + "</font>"));
 
             }
             String imageURL = null;
@@ -246,6 +252,7 @@ public class ArticleDetailFragment extends ActionBarActivity
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        Log.e(TAG, "DetailFragment itemId: " + mItemId);
         return ArticleLoader.newInstanceForItemId(this, mItemId);
     }
 
@@ -253,7 +260,7 @@ public class ArticleDetailFragment extends ActionBarActivity
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
 
         mCursor = cursor;
-        if (mCursor != null) {
+        if (mCursor != null && mCursor.getCount() != 0) {
             mCursor.moveToFirst();
             Log.e(TAG, "Detail data: " + mCursor.getString(ArticleLoader.Query.TITLE));
             if(mCursor.getCount() == 0) {
@@ -261,6 +268,7 @@ public class ArticleDetailFragment extends ActionBarActivity
                 return;
             }
             bindViews();
+
         } else {
             Log.e(TAG, "Error reading item detail cursor");
         }
@@ -285,6 +293,20 @@ public class ArticleDetailFragment extends ActionBarActivity
                 ? (int)  mPhotoView.getHeight() - mScrollY
                 : mPhotoView.getHeight() - mScrollY;
     }
+
+//    private void animateScreenElements(View target) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Slide slide = new Slide();
+//
+//            slide.addTarget(target);
+//            slide.setInterpolator(
+//                    AnimationUtils.loadInterpolator(this,
+//                            android.R.interpolator.linear_out_slow_in));
+//            slide.setDuration(300);
+//            //TransitionManager.beginDelayedTransition(mRecyclerBodytextView,slide);
+//            getWindow().setEnterTransition(slide);
+//        }
+//    }
 
     @TargetApi(21)
     private boolean addTransitionListener() {
@@ -383,9 +405,17 @@ public class ArticleDetailFragment extends ActionBarActivity
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
             holder.mTextView.setText(Html.fromHtml(mDataset[position]));
-
+            runAnimation(holder.itemView);
         }
 
+        private void runAnimation(View view) {
+            view.setTranslationY(Utils.getScreenHeight(ArticleDetailFragment.this));
+            view.animate()
+                    .translationY(0)
+                    .setInterpolator(new DecelerateInterpolator(3.f))
+                    .setDuration(1000)
+                    .start();
+        }
         // Return the size of your dataset (invoked by the layout manager)
         @Override
         public int getItemCount() {
